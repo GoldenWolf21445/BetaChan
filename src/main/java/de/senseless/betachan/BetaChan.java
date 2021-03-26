@@ -1,5 +1,6 @@
 package de.senseless.betachan;
 
+import de.senseless.betachan.area.AreaManager;
 import de.senseless.betachan.handler.CommandManager;
 import de.senseless.betachan.listener.CommandListener;
 import io.github.cdimascio.dotenv.Dotenv;
@@ -9,9 +10,8 @@ import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
 import net.dv8tion.jda.api.sharding.ShardManager;
 
 import javax.security.auth.login.LoginException;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.util.Properties;
 
 public class BetaChan {
 
@@ -19,21 +19,23 @@ public class BetaChan {
 
     public ShardManager shardManager;
     private CommandManager commandManager;
+    public Properties prop = new Properties();
 
-    public BetaChan() throws LoginException {
+    public BetaChan() throws LoginException, IOException {
         INSTANCE = this;
         Dotenv dotenv = Dotenv.configure()
                 .ignoreIfMalformed()
                 .ignoreIfMissing()
                 .load();
 
+        prop.load(new FileInputStream("src/main/resources/config.properties"));
         DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.createDefault(dotenv.get("TOKEN"));
         builder.setActivity(Activity.listening("Music"));
 
         builder.setStatus(OnlineStatus.ONLINE);
         this.commandManager = new CommandManager();
         builder.addEventListeners(new CommandListener());
-
+        AreaManager.init();
         shardManager = builder.build();
         System.out.println("Bot online.");
 
@@ -41,7 +43,7 @@ public class BetaChan {
 
     }
 
-    public static void main(String[] args) throws LoginException {
+    public static void main(String[] args) throws LoginException, IOException {
         new BetaChan();
     }
 
