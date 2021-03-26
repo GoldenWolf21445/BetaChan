@@ -1,5 +1,7 @@
 package de.senseless.betachan;
 
+import de.senseless.betachan.handler.CommandManager;
+import de.senseless.betachan.listener.CommandListener;
 import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
@@ -16,6 +18,7 @@ public class BetaChan {
     public static BetaChan INSTANCE;
 
     public ShardManager shardManager;
+    private CommandManager commandManager;
 
     public BetaChan() throws LoginException {
         INSTANCE = this;
@@ -28,6 +31,8 @@ public class BetaChan {
         builder.setActivity(Activity.listening("Music"));
 
         builder.setStatus(OnlineStatus.ONLINE);
+        this.commandManager = new CommandManager();
+        builder.addEventListeners(new CommandListener());
 
         shardManager = builder.build();
         System.out.println("Bot online.");
@@ -42,7 +47,7 @@ public class BetaChan {
 
     public void shutdown() {
         new Thread(() -> {
-            String line = "";
+            String line;
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             try {
                 while ((line = reader.readLine()) != null) {
@@ -61,6 +66,11 @@ public class BetaChan {
                 e.printStackTrace();
             }
         }).start();
+    }
+
+
+    public CommandManager getCommandManager() {
+        return commandManager;
     }
 }
 
