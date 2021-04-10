@@ -12,14 +12,18 @@ public class Area {
 
     private int number;
 
-    Area(List<Monster> monster, int number) {
-        this.monster = monster;
+    Area(int number) {
+        this.monster = new LinkedList<>();
         this.number = number;
         areas.add(this);
     }
 
     public List<Monster> getMonster() {
         return monster;
+    }
+
+    public void addMonster(Monster m){
+        this.monster.add(m);
     }
 
     public int getNumber() {

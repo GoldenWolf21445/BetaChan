@@ -5,10 +5,12 @@ import java.util.List;
 
 public class Item {
     private String name;
+    private boolean craftable;
     private static List<Item> items = new LinkedList<>();
 
-    public Item(String name) {
+    public Item(String name,boolean craftable) {
         this.name = name;
+        this.craftable = craftable;
         items.add(this);
     }
 
@@ -23,5 +25,13 @@ public class Item {
             }
         }
         return null;
+    }
+
+    public boolean isCraftable() {
+        return craftable;
+    }
+
+    public static List<Item> getItems() {
+        return items;
     }
 }
