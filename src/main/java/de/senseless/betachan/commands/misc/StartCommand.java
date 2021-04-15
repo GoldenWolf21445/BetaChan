@@ -1,4 +1,4 @@
-package de.senseless.betachan.commands;
+package de.senseless.betachan.commands.misc;
 
 import de.senseless.betachan.commands.types.ServerCommand;
 import de.senseless.betachan.handler.UserHandler;

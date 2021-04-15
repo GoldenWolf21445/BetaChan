@@ -2,6 +2,7 @@ package de.senseless.betachan.user;
 
 
 import de.senseless.betachan.area.Area;
+import de.senseless.betachan.item.Item;
 import net.dv8tion.jda.api.entities.Member;
 
 import java.util.LinkedList;
@@ -15,6 +16,7 @@ public class User {
 
     private int money, xp, level, atk, def,life,maxlife;
     private Area area;
+    private List<Item> inventory;
 
     public User(Member member, int money, int xp, int level, int atk, int def, int life, int maxlife, Area area) {
 
@@ -28,6 +30,7 @@ public class User {
         this.maxlife = maxlife;
         this.area = area;
         users.add(this);
+        inventory = new LinkedList<>();
     }
 
     public static User getByID(String id) {
@@ -77,5 +80,9 @@ public class User {
 
     public Area getArea() {
         return area;
+    }
+
+    public List<Item> getInventory() {
+        return inventory;
     }
 }

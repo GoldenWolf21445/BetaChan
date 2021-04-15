@@ -1,4 +1,4 @@
-package de.senseless.betachan.commands;
+package de.senseless.betachan.commands.crafting;
 
 import de.senseless.betachan.BetaChan;
 import de.senseless.betachan.commands.types.ServerCommand;

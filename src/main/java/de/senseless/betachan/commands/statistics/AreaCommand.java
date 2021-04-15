@@ -1,9 +1,8 @@
-package de.senseless.betachan.commands;
+package de.senseless.betachan.commands.statistics;
 
 import de.senseless.betachan.BetaChan;
 import de.senseless.betachan.area.Area;
 import de.senseless.betachan.commands.types.ServerCommand;
-import de.senseless.betachan.item.Item;
 import de.senseless.betachan.monster.Monster;
 import de.senseless.betachan.user.User;
 import net.dv8tion.jda.api.EmbedBuilder;

@@ -4,6 +4,6 @@ import de.senseless.betachan.item.Item;
 
 public class Wizzard extends Monster {
     public Wizzard() {
-        super(30, 20, 50, "Wizzard", new Item("", false));
+        super(30, 20, 50, 0, "Wizzard", new Item("", false));
     }
 }

@@ -30,7 +30,7 @@ public class BetaChan {
 
         prop.load(new FileInputStream("src/main/resources/config.properties"));
         DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.createDefault(dotenv.get("TOKEN"));
-        builder.setActivity(Activity.listening("Music"));
+        builder.setActivity(Activity.watching("beta help"));
 
         builder.setStatus(OnlineStatus.ONLINE);
         this.commandManager = new CommandManager();
