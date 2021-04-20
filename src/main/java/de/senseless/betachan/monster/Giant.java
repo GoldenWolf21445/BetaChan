@@ -4,6 +4,6 @@ import de.senseless.betachan.item.Item;
 
 public class Giant extends Monster{
     public Giant() {
-        super(200, 2, 75, 0, "Giant", new Item("",false));
+        super(1, 1, 1, 1, "Giant");
     }
 }

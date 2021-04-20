@@ -11,9 +11,9 @@ public class Monster {
 
     private final int HP,ATK,DEF,XP;
     private final String NAME;
-    private Item drop;
+    private Item[] drop;
 
-    public Monster(int HP, int ATK, int DEF, int xp, String name, Item drop) {
+    public Monster(int HP, int ATK, int DEF, int xp, String name, Item... drop) {
         this.HP = HP;
         this.ATK = ATK;
         this.DEF = DEF;
@@ -39,7 +39,7 @@ public class Monster {
         return NAME;
     }
 
-    public Item getDrop() {
+    public Item[] getDrops() {
         return drop;
     }
 

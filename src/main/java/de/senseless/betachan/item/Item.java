@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Item {
     private String name;
-    private boolean craftable;
+    private final boolean craftable;
     private static List<Item> items = new LinkedList<>();
 
     public Item(String name,boolean craftable) {

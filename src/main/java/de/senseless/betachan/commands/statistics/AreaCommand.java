@@ -3,6 +3,7 @@ package de.senseless.betachan.commands.statistics;
 import de.senseless.betachan.BetaChan;
 import de.senseless.betachan.area.Area;
 import de.senseless.betachan.commands.types.ServerCommand;
+import de.senseless.betachan.item.Item;
 import de.senseless.betachan.monster.Monster;
 import de.senseless.betachan.user.User;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -30,8 +31,9 @@ public class AreaCommand implements ServerCommand {
                     StringBuilder drops = new StringBuilder();
                     for (Monster m : Area.getByNumber(1).getMonster()) {
                         monster.append("\n").append(m.getNAME());
-
-                        drops.append("\n").append(m.getDrop().getName());
+                        for (Item drop : m.getDrops()) {
+                            drops.append("\n").append(drop.getName());
+                        }
                     }
                     embed.addField("Area:", "1", false);
                     embed.addField("Monster:", monster.toString(), false);
@@ -42,7 +44,9 @@ public class AreaCommand implements ServerCommand {
                     StringBuilder drops = new StringBuilder();
                     for (Monster m : Area.getByNumber(2).getMonster()) {
                         monster.append("\n").append(m.getNAME());
-                        drops.append("\n").append(m.getDrop().getName());
+                        for (Item drop : m.getDrops()) {
+                            drops.append("\n").append(drop.getName());
+                        }
                     }
                     embed.addField("Area:", "2", false);
                     embed.addField("Monster:", monster.toString(), false);
@@ -53,8 +57,9 @@ public class AreaCommand implements ServerCommand {
                     StringBuilder drops = new StringBuilder();
                     for (Monster m : Area.getByNumber(3).getMonster()) {
                         monster.append("\n").append(m.getNAME());
-
-                        drops.append("\n").append(m.getDrop().getName());
+                        for (Item drop : m.getDrops()) {
+                            drops.append("\n").append(drop.getName());
+                        }
                     }
                     embed.addField("Area:", "3", false);
                     embed.addField("Monster:", monster.toString(), false);
@@ -65,8 +70,9 @@ public class AreaCommand implements ServerCommand {
                     StringBuilder drops = new StringBuilder();
                     for (Monster m : Area.getByNumber(4).getMonster()) {
                         monster.append("\n").append(m.getNAME());
-
-                        drops.append("\n").append(m.getDrop().getName());
+                        for (Item drop : m.getDrops()) {
+                            drops.append("\n").append(drop.getName());
+                        }
                     }
                     embed.addField("Area:", "4", false);
                     embed.addField("Monster:", monster.toString(), false);
@@ -77,8 +83,9 @@ public class AreaCommand implements ServerCommand {
                     StringBuilder drops = new StringBuilder();
                     for (Monster m : Area.getByNumber(5).getMonster()) {
                         monster.append("\n").append(m.getNAME());
-
-                        drops.append("\n").append(m.getDrop().getName());
+                        for (Item drop : m.getDrops()) {
+                            drops.append("\n").append(drop.getName());
+                        }
                     }
                     embed.addField("Area:", "5", false);
                     embed.addField("Monster:", monster.toString(), false);

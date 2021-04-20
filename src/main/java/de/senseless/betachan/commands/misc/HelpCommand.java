@@ -8,6 +8,8 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 
 import java.awt.*;
+import java.time.Instant;
+import java.util.Date;
 
 public class HelpCommand implements ServerCommand {
     //TODO: Finish it
@@ -79,6 +81,8 @@ public class HelpCommand implements ServerCommand {
             }
         }
         builder.setColor(Color.decode("#ff6600"));
+        builder.setThumbnail("https://cdn.discordapp.com/avatars/786618636616859669/1c433df101f118704c66c57d1e20f7b3.png?size=4096");
+        builder.setTimestamp(Instant.now());
         builder.setFooter("Requested by " + member.getUser().getName() + " | [] = Required, {} = Optional", member.getUser().getAvatarUrl());
         channel.sendMessage(builder.build()).queue();
     }

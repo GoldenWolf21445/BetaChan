@@ -1,9 +1,10 @@
 package de.senseless.betachan.monster;
 
 import de.senseless.betachan.item.Item;
+import de.senseless.betachan.item.Stone;
 
 public class Golem extends Monster{
     public Golem() {
-        super(50, 4, 150, 0, "Golem", new Item("Iron Shard",false));
+        super(1, 1, 1, 1, "Golem", new Stone());
     }
 }

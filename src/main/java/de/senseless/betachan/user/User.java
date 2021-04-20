@@ -14,8 +14,8 @@ public class User {
 
     private String id;
 
-    private int money, xp, level, atk, def,life,maxlife;
-    private Area area;
+    private final int money, xp, level, atk, def,life,maxlife;
+    private final Area area;
     private List<Item> inventory;
 
     public User(Member member, int money, int xp, int level, int atk, int def, int life, int maxlife, Area area) {
@@ -85,4 +85,10 @@ public class User {
     public List<Item> getInventory() {
         return inventory;
     }
+
+    public void addToInventory(Item item) {
+        inventory.add(item);
+    }
+
+
 }

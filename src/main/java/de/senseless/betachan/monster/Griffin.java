@@ -1,9 +1,12 @@
 package de.senseless.betachan.monster;
 
+import de.senseless.betachan.item.GriffinClaw;
+import de.senseless.betachan.item.GriffinFeather;
 import de.senseless.betachan.item.Item;
 
 public class Griffin extends Monster{
+
     public Griffin() {
-        super(30, 10, 20, 0, "Griffin", new Item("Griffin Feather",false));
+        super(1, 1, 1, 1, "Griffin", new GriffinFeather(),new GriffinClaw());
     }
 }
