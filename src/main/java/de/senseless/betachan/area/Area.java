@@ -1,13 +1,13 @@
 package de.senseless.betachan.area;
 
-import de.senseless.betachan.monster.Monster;
+import de.senseless.betachan.enums.MonsterType;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class Area {
 
-    private List<Monster> monster;
+    private List<MonsterType> monster;
     private static List<Area> areas = new LinkedList<>();
 
     private int number;
@@ -18,11 +18,11 @@ public class Area {
         areas.add(this);
     }
 
-    public List<Monster> getMonster() {
+    public List<MonsterType> getMonster() {
         return monster;
     }
 
-    public void addMonster(Monster m){
+    public void addMonster(MonsterType m){
         this.monster.add(m);
     }
 
@@ -39,6 +39,7 @@ public class Area {
         return null;
     }
 
-
-
+    public static List<Area> getAreas() {
+        return areas;
+    }
 }

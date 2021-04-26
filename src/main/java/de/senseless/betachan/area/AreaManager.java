@@ -1,19 +1,20 @@
 package de.senseless.betachan.area;
 
-import de.senseless.betachan.monster.*;
-
-import java.util.LinkedList;
-import java.util.List;
+import de.senseless.betachan.enums.MonsterType;
 
 public class AreaManager {
 
+    public static final Area AREA_ONE = new Area(1);
+    public static final Area AREA_TWO = new Area(2);
+    public static final Area AREA_THREE = new Area(3);
+    public static final Area AREA_FOUR = new Area(4);
+    public static final Area AREA_FIVE = new Area(5);
+
+
     public static void init() {
-        Area one = new Area(1);
-        one.addMonster(new Wolf());
-        Area two = new Area(2);
-        Area three = new Area(3);
-        Area four = new Area(4);
-        Area five = new Area(5);
+        for (MonsterType mt : MonsterType.values()){
+            AREA_ONE.addMonster(mt);
+        }
     }
 
 }

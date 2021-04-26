@@ -18,8 +18,8 @@ public class InventoryCommand implements ServerCommand {
             User user = User.getByID(member.getId());
             if (user != null) {
                 StringBuilder inv = new StringBuilder();
-                for (Item i : user.getInventory()) {
-                    inv.append("\n").append(i.getName());
+                for (Item i : user.getInventory().keySet()) {
+                    inv.append("\n").append(user.getInventory().get(i)).append("x ").append(i.getName());
                 }
                 EmbedBuilder eb = new EmbedBuilder();
                 eb.setColor(Color.decode("#ff6600"));
@@ -39,8 +39,8 @@ public class InventoryCommand implements ServerCommand {
                 User user = User.getByID(m.getId());
                 if (user != null) {
                     StringBuilder inv = new StringBuilder();
-                    for (Item i : user.getInventory()) {
-                        inv.append("\n").append(i.getName());
+                    for (Item i : user.getInventory().keySet()) {
+                        inv.append("\n").append(user.getInventory().get(i)).append("x ").append(i.getName());
                     }
                     EmbedBuilder eb = new EmbedBuilder();
                     eb.setColor(Color.decode("#ff6600"));

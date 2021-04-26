@@ -5,6 +5,8 @@ import de.senseless.betachan.area.Area;
 import de.senseless.betachan.item.Item;
 import net.dv8tion.jda.api.entities.Member;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,7 +18,7 @@ public class User {
 
     private final int money, xp, level, atk, def,life,maxlife;
     private final Area area;
-    private List<Item> inventory;
+    private HashMap<Item,Integer> inventory;
 
     public User(Member member, int money, int xp, int level, int atk, int def, int life, int maxlife, Area area) {
 
@@ -30,7 +32,7 @@ public class User {
         this.maxlife = maxlife;
         this.area = area;
         users.add(this);
-        inventory = new LinkedList<>();
+        inventory = new LinkedHashMap<>();
     }
 
     public static User getByID(String id) {
@@ -82,12 +84,16 @@ public class User {
         return area;
     }
 
-    public List<Item> getInventory() {
+    public HashMap<Item,Integer> getInventory() {
         return inventory;
     }
 
-    public void addToInventory(Item item) {
-        inventory.add(item);
+    public void addToInventory(Item item,int amount) {
+        if(inventory.containsKey(item)){
+            inventory.put(item,inventory.get(item)+amount);
+        } else {
+            inventory.put(item, amount);
+        }
     }
 
 

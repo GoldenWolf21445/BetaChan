@@ -3,8 +3,8 @@ package de.senseless.betachan.commands.statistics;
 import de.senseless.betachan.BetaChan;
 import de.senseless.betachan.area.Area;
 import de.senseless.betachan.commands.types.ServerCommand;
+import de.senseless.betachan.enums.MonsterType;
 import de.senseless.betachan.item.Item;
-import de.senseless.betachan.monster.Monster;
 import de.senseless.betachan.user.User;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
@@ -20,79 +20,30 @@ public class AreaCommand implements ServerCommand {
             if (args.length == 0) {
                 embed.addField("Current Area:", "" + u.getArea().getNumber(), false);
                 StringBuilder b = new StringBuilder();
-                for (Monster m : u.getArea().getMonster()) {
+                for (MonsterType m : u.getArea().getMonster()) {
                     b.append("\n").append(m.getNAME());
                 }
                 embed.addField("Monsters: ", b.toString(), false);
                 channel.sendMessage(embed.build()).queue();
             } else if (args.length == 1) {
-                if (args[0].equalsIgnoreCase("1")) {
-                    StringBuilder monster = new StringBuilder();
-                    StringBuilder drops = new StringBuilder();
-                    for (Monster m : Area.getByNumber(1).getMonster()) {
+                StringBuilder monster = new StringBuilder();
+                StringBuilder drops = new StringBuilder();
+                Area a = Area.getByNumber(Integer.parseInt(args[0]));
+                if(a != null) {
+                    for (MonsterType m : a.getMonster()) {
                         monster.append("\n").append(m.getNAME());
-                        for (Item drop : m.getDrops()) {
-                            drops.append("\n").append(drop.getName());
+                        if(m.getDrop() != null) {
+                            for (Item drop : m.getDrop()) {
+                                drops.append("\n").append(drop.getName());
+                            }
                         }
                     }
-                    embed.addField("Area:", "1", false);
-                    embed.addField("Monster:", monster.toString(), false);
-                    embed.addField("Drops:", drops.toString(), false);
-                    channel.sendMessage(embed.build()).queue();
-                } else if (args[0].equalsIgnoreCase("2")) {
-                    StringBuilder monster = new StringBuilder();
-                    StringBuilder drops = new StringBuilder();
-                    for (Monster m : Area.getByNumber(2).getMonster()) {
-                        monster.append("\n").append(m.getNAME());
-                        for (Item drop : m.getDrops()) {
-                            drops.append("\n").append(drop.getName());
-                        }
-                    }
-                    embed.addField("Area:", "2", false);
-                    embed.addField("Monster:", monster.toString(), false);
-                    embed.addField("Drops:", drops.toString(), false);
-                    channel.sendMessage(embed.build()).queue();
-                } else if (args[0].equalsIgnoreCase("3")) {
-                    StringBuilder monster = new StringBuilder();
-                    StringBuilder drops = new StringBuilder();
-                    for (Monster m : Area.getByNumber(3).getMonster()) {
-                        monster.append("\n").append(m.getNAME());
-                        for (Item drop : m.getDrops()) {
-                            drops.append("\n").append(drop.getName());
-                        }
-                    }
-                    embed.addField("Area:", "3", false);
-                    embed.addField("Monster:", monster.toString(), false);
-                    embed.addField("Drops:", drops.toString(), false);
-                    channel.sendMessage(embed.build()).queue();
-                } else if (args[0].equalsIgnoreCase("4")) {
-                    StringBuilder monster = new StringBuilder();
-                    StringBuilder drops = new StringBuilder();
-                    for (Monster m : Area.getByNumber(4).getMonster()) {
-                        monster.append("\n").append(m.getNAME());
-                        for (Item drop : m.getDrops()) {
-                            drops.append("\n").append(drop.getName());
-                        }
-                    }
-                    embed.addField("Area:", "4", false);
-                    embed.addField("Monster:", monster.toString(), false);
-                    embed.addField("Drops:", drops.toString(), false);
-                    channel.sendMessage(embed.build()).queue();
-                } else if (args[0].equalsIgnoreCase("5")) {
-                    StringBuilder monster = new StringBuilder();
-                    StringBuilder drops = new StringBuilder();
-                    for (Monster m : Area.getByNumber(5).getMonster()) {
-                        monster.append("\n").append(m.getNAME());
-                        for (Item drop : m.getDrops()) {
-                            drops.append("\n").append(drop.getName());
-                        }
-                    }
-                    embed.addField("Area:", "5", false);
+                    embed.addField("Area:", args[0], false);
                     embed.addField("Monster:", monster.toString(), false);
                     embed.addField("Drops:", drops.toString(), false);
                     channel.sendMessage(embed.build()).queue();
                 } else {
-                    message.reply("You need to specify a known Area!").queue();
+                    message.reply("I'm sorry but I couldn't find this Area").queue();
                 }
             }
         } else {
