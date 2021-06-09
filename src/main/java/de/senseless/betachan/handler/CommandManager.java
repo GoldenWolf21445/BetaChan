@@ -1,5 +1,6 @@
 package de.senseless.betachan.handler;
 
+import de.senseless.betachan.commands.administrative.AdminCommand;
 import de.senseless.betachan.commands.crafting.*;
 import de.senseless.betachan.commands.gathering.*;
 import de.senseless.betachan.commands.misc.*;
@@ -30,9 +31,14 @@ public class CommandManager {
         this.commands.put("cook", new CookCommand());
         this.commands.put("eat", new EatCommand());
         this.commands.put("inventory", new InventoryCommand());
+        this.commands.put("inv", new InventoryCommand());
         this.commands.put("enchant", new EnchantCommand());
         this.commands.put("dungeon", new DungeonCommand());
         this.commands.put("equip", new EquipCommand());
+        this.commands.put("smelt", new SmeltCommand());
+        this.commands.put("shop", new ShopCommand());
+        this.commands.put("admin", new AdminCommand());
+        this.commands.put("bank", new BankCommand());
     }
 
     public boolean perform(String command, String[] args, Member member, TextChannel channel, Message message) {

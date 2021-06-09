@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.User;
 
 import java.awt.*;
 import java.time.Instant;
@@ -20,10 +21,10 @@ public class HelpCommand implements ServerCommand {
             builder.setTitle("Commands");
             String prefix = BetaChan.INSTANCE.prop.getProperty("prefix");
             builder.setDescription("More help use " + prefix + " help [command]\nAdd `" + prefix + "` before any command!\nTo Start your Adventure use `" + prefix + " start`");
-            builder.addField("Statistics", "`profile`,`area [#]`,`inventory {@user}`", false);
-            builder.addField("Gathering", "`hunt`,`mine`,`chop`,`pickup`", false);
-            builder.addField("Crafting", "`craft [item]`,`cook [item]`,`recipes [#]`,`smelt [amount]`", false);
-            builder.addField("Miscellaneous", "`eat [item]`,`help {cmd}`,`start`,`dungeon [@user,...]`,`enchant [#]`,\n`equip [item]`", false);
+            builder.addField("Statistics", "`profile`, `area [#]`, `inventory {@user}`", false);
+            builder.addField("Gathering", "`hunt [monster]`, `mine`, `chop`, `pickup`", false);
+            builder.addField("Crafting", "`craft [item]`, `cook [item]`, `recipes [#]`, `smelt [amount]`", false);
+            builder.addField("Miscellaneous", "`eat [item]`, `help {cmd}`, `start`, `dungeon [@user,...]`, `enchant [#]`, `equip [item]`, `shop {item} {amount}`", false);
         } else if (args.length == 1) {
             if (args[0].equalsIgnoreCase("dungeon")) {
                 builder.setTitle("Dungeon");
@@ -81,7 +82,10 @@ public class HelpCommand implements ServerCommand {
             }
         }
         builder.setColor(Color.decode("#ff6600"));
-        builder.setThumbnail("https://cdn.discordapp.com/avatars/786618636616859669/1c433df101f118704c66c57d1e20f7b3.png?size=4096");
+        Member u = message.getGuild().getMemberById("786618636616859669");
+        if(u != null){
+            builder.setThumbnail(u.getUser().getAvatarUrl());
+        }
         builder.setTimestamp(Instant.now());
         builder.setFooter("Requested by " + member.getUser().getName() + " | [] = Required, {} = Optional", member.getUser().getAvatarUrl());
         channel.sendMessage(builder.build()).queue();

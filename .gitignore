@@ -1,4 +1,5 @@
 /.idea
 /src/main/resources/.env
+/src/main/resources/user.db
 /src/main/java/META-INF/MANIFEST.MF
 pom.xml

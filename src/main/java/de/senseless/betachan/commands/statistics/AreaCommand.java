@@ -14,9 +14,9 @@ import net.dv8tion.jda.api.entities.TextChannel;
 public class AreaCommand implements ServerCommand {
     @Override
     public void performCommand(String[] args, Member member, TextChannel channel, Message message) {
-        User u = User.getByID(member.getId());
         EmbedBuilder embed = new EmbedBuilder();
-        if (u != null) {
+        User u = User.loadUser(member.getId(), member.getEffectiveName());
+        if(u.getStarted() == 1){
             if (args.length == 0) {
                 embed.addField("Current Area:", "" + u.getArea().getNumber(), false);
                 StringBuilder b = new StringBuilder();

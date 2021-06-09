@@ -5,6 +5,16 @@ import de.senseless.betachan.item.Item;
 
 public enum MonsterType {
 
+    COW(3,1,0,1,"Cow",ItemHandler.MEAT),
+    SHEEP(3,1,0,1,"Sheep",ItemHandler.MEAT),
+    CHICKEN(3,1,0,1,"Chicken",ItemHandler.MEAT),
+    RABBIT(3,1,0,1,"Rabbit",ItemHandler.MEAT),
+    PIG(3,1,0,1,"Pig",ItemHandler.MEAT),
+    HORSE(3,1,0,1,"Horse",ItemHandler.MEAT),
+    LAMA(3,1,0,1,"Lama",ItemHandler.MEAT),
+    ELCH(3,1,0,1,"Elch",ItemHandler.MEAT),
+    DEER(3,1,0,1,"Deer",ItemHandler.MEAT),
+    BEAR(3,1,0,1,"Bear",ItemHandler.MEAT),
     WOLF(1,1,1,1,"Wolf", ItemHandler.WOLFFUR,ItemHandler.MEAT),
     SKELETON(1,1,1,1,"Skeleton",ItemHandler.BONE),
     ELITE_SKELETON(1,1,1,1,"Elite-Skeleton",ItemHandler.BONE),
@@ -29,7 +39,7 @@ public enum MonsterType {
     TROLL(1,1,1,1,"Troll"),
     BASILISK(1,1,1,1,"Basilisk",ItemHandler.BASILISKSCALE),
     ONI(1,1,1,1,"Oni"),
-    KITSUNE(1,1,1,1,"Kitsune"),
+    KITSUNE(1,1,1,1,"Kitsune",ItemHandler.KITSUNETAIL),
     DEMON(1,1,1,1,"Demon"),
     DEMONGENERAL(1,1,1,1,"Demon General"),
     DEMONPRINCE(1,1,1,1,"Demon Prince"),
@@ -49,7 +59,30 @@ public enum MonsterType {
     ANCIENTRUINGUARD(1,1,1,1,"Ancient Ruin Guard"),
     ANCIENTRUINHUNTER(1,1,1,1,"Ancient Ruin Hunter"),
     WITCH(1,1,1,1,"Witch"),
-    SUCCUBUS(1,1,1,1,"Succubus");
+    SUCCUBUS(1,1,1,1,"Succubus"),
+    INCUBUS(1,1,1,1,"Incubus"),
+    SHADOW(1,1,1,1,"Shadow"),
+    GHOUL(1,1,1,1,"Ghoul"),
+    DULLAHAN(1,1,1,1,"Dullahan"),
+    MUMMY(1,1,1,1,"Mummy"),
+    SYLPH(1,1,1,1,"Sylph"),
+    DEATHANGEL(1,1,1,1,"Death Angel"),
+    VAMPIRE(1,1,1,1,"Vampire"),
+    WILL_O_WISP(1,1,1,1,"Will-o'-wisp"),
+    MINOTAUR(1,1,1,1,"Minotaur"),
+    SPHINX(1,1,1,1,"Sphinx"),
+    MANTICORE(1,1,1,1,"Manticore"),
+    HIPPOGRYPH(1,1,1,1,"Hippogryph"),
+    GORGON(1,1,1,1,"Gorgon"),
+    BEHEMOTH(1,1,1,1,"Behemoth"),
+    HYDRA(1,1,1,1,"Hydra"),
+    TITAN(1,1,1,1,"Titan"),
+    BASILISK_BOSS(1,1,1,1,"Basilisk"),
+    YAMATANOOROCHI(1,1,1,1,"Yamata no Orochi"),
+    ABADDON(1,1,1,1,"Abaddon"),
+    ASMODEUS(1,1,1,1,"Asmodeus"),
+    IFRIT(1,1,1,1,"Ifrit"),
+    LILITH(1,1,1,1,"Lilith");
 
 
     private int HP,ATK,DEF,XP;
@@ -63,6 +96,15 @@ public enum MonsterType {
         this.XP = XP;
         this.NAME = NAME;
         this.drop = drop;
+    }
+
+    public static MonsterType getByName(String name){
+        for (MonsterType mt : values()){
+            if(mt.getNAME().toLowerCase().equals(name.toLowerCase())){
+                return mt;
+            }
+        }
+        return null;
     }
 
     public int getHP() {

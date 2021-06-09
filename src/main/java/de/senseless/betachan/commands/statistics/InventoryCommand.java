@@ -15,8 +15,8 @@ public class InventoryCommand implements ServerCommand {
     @Override
     public void performCommand(String[] args, Member member, TextChannel channel, Message message) {
         if(args.length == 0 ){
-            User user = User.getByID(member.getId());
-            if (user != null) {
+            User user = User.loadUser(member.getId(), member.getEffectiveName());
+            if(user.getStarted() == 1){
                 StringBuilder inv = new StringBuilder();
                 for (Item i : user.getInventory().keySet()) {
                     inv.append("\n").append(user.getInventory().get(i)).append("x ").append(i.getName());
@@ -36,8 +36,8 @@ public class InventoryCommand implements ServerCommand {
         } else if(args.length == 1){
             Member m = message.getMentionedMembers().get(0);
             if(m != null) {
-                User user = User.getByID(m.getId());
-                if (user != null) {
+                User user = User.loadUser(m.getId(), m.getEffectiveName());
+                if(user.getStarted() == 1){
                     StringBuilder inv = new StringBuilder();
                     for (Item i : user.getInventory().keySet()) {
                         inv.append("\n").append(user.getInventory().get(i)).append("x ").append(i.getName());

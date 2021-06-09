@@ -2,12 +2,17 @@ package de.senseless.betachan;
 
 import de.senseless.betachan.area.AreaManager;
 import de.senseless.betachan.handler.CommandManager;
+import de.senseless.betachan.item.Item;
 import de.senseless.betachan.listener.CommandListener;
+import de.senseless.betachan.sql.SQLite;
 import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
 import net.dv8tion.jda.api.sharding.ShardManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.security.auth.login.LoginException;
 import java.io.*;
@@ -20,6 +25,7 @@ public class BetaChan {
     public ShardManager shardManager;
     private CommandManager commandManager;
     public Properties prop = new Properties();
+    public SQLite database;
 
     public BetaChan() throws LoginException, IOException {
         INSTANCE = this;
@@ -36,10 +42,12 @@ public class BetaChan {
         this.commandManager = new CommandManager();
         builder.addEventListeners(new CommandListener());
         AreaManager.init();
+        database = new SQLite();
         shardManager = builder.build();
         System.out.println("Bot online.");
 
         shutdown();
+
 
     }
 
@@ -56,6 +64,7 @@ public class BetaChan {
                     if (line.equalsIgnoreCase("exit")) {
                         if (shardManager != null) {
                             shardManager.setStatus(OnlineStatus.OFFLINE);
+                            database.disconnect();
                             shardManager.shutdown();
                             System.out.println("Bot offline.");
                         }
