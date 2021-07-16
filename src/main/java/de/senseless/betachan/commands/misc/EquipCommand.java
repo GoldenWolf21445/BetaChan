@@ -2,6 +2,7 @@ package de.senseless.betachan.commands.misc;
 
 import de.senseless.betachan.BetaChan;
 import de.senseless.betachan.commands.types.ServerCommand;
+import de.senseless.betachan.enums.ToolType;
 import de.senseless.betachan.item.Item;
 import de.senseless.betachan.user.User;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -25,22 +26,41 @@ public class EquipCommand implements ServerCommand {
                 if(i != null){
                     if(u.getInventory().containsKey(i)){
                         if(u.getInventory().get(i) > 0){
-                            Item currentlyEquiped = u.getEquippedTool();
-                            if(currentlyEquiped != null) {
-                                u.getInventory().put(currentlyEquiped, (u.getInventory().get(currentlyEquiped) != 0 ? u.getInventory().get(currentlyEquiped) : 0) + 1);
-                            }
-                            if(u.getInventory().get(i)-1 == 0) {
-                                u.getInventory().remove(i);
+                            if(i.getToolType() != ToolType.SWORD) {
+                                Item currentlyEquiped = u.getEquippedTool();
+                                if (currentlyEquiped != null) {
+                                    u.addToInventory(currentlyEquiped, 1);
+                                }
+                                if (u.getInventory().get(i) - 1 == 0) {
+                                    u.getInventory().remove(i);
+                                } else {
+                                    u.getInventory().put(i, u.getInventory().get(i) - 1);
+                                }
+                                u.setEquippedTool(i);
+                                u.save();
+                                EmbedBuilder eb = new EmbedBuilder();
+                                eb.setTitle("Item Equiped");
+                                eb.setTimestamp(Instant.now());
+                                eb.addField("Item Equipped", i.getName(), false);
+                                channel.sendMessage(eb.build()).queue();
                             } else {
-                                u.getInventory().put(i, u.getInventory().get(i) - 1);
+                                Item currentlyEquiped = u.getEquippedSword();
+                                if (currentlyEquiped != null) {
+                                    u.addToInventory(currentlyEquiped, 1);
+                                }
+                                if (u.getInventory().get(i) - 1 == 0) {
+                                    u.getInventory().remove(i);
+                                } else {
+                                    u.getInventory().put(i, u.getInventory().get(i) - 1);
+                                }
+                                u.setEquippedSword(i);
+                                u.save();
+                                EmbedBuilder eb = new EmbedBuilder();
+                                eb.setTitle("Sword Equiped");
+                                eb.setTimestamp(Instant.now());
+                                eb.addField("Sword Equipped", i.getName(), false);
+                                channel.sendMessage(eb.build()).queue();
                             }
-                            u.setEquippedTool(i);
-                            u.save();
-                            EmbedBuilder eb = new EmbedBuilder();
-                            eb.setTitle("Item Equiped");
-                            eb.setTimestamp(Instant.now());
-                            eb.addField("Item Equipped",i.getName(),false);
-                            channel.sendMessage(eb.build()).queue();
                         } else {
                             message.reply("I'm sorry but you don't own this Item!").queue();
                         }

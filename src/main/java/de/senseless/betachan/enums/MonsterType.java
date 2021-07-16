@@ -5,9 +5,9 @@ import de.senseless.betachan.item.Item;
 
 public enum MonsterType {
 
-    COW(3,1,0,1,"Cow",ItemHandler.MEAT),
-    SHEEP(3,1,0,1,"Sheep",ItemHandler.MEAT),
-    CHICKEN(3,1,0,1,"Chicken",ItemHandler.MEAT),
+    COW(3,1,0,1,"Cow",ItemHandler.MEAT,ItemHandler.LEATHER),
+    SHEEP(3,1,0,1,"Sheep",ItemHandler.MEAT,ItemHandler.WOOL),
+    CHICKEN(3,1,0,1,"Chicken",ItemHandler.MEAT,ItemHandler.FEATHER),
     RABBIT(3,1,0,1,"Rabbit",ItemHandler.MEAT),
     PIG(3,1,0,1,"Pig",ItemHandler.MEAT),
     HORSE(3,1,0,1,"Horse",ItemHandler.MEAT),
@@ -30,7 +30,7 @@ public enum MonsterType {
     DRAGON(1,1,1,1,"Dragon",ItemHandler.DRAGONHEART,ItemHandler.DRAGONSCALE,ItemHandler.DRAGONTOOTH),
     GRIFFIN(1,1,1,1,"Griffin",ItemHandler.GRIFFINCLAW,ItemHandler.GRIFFINFEATHER),
     PIRATE(1,1,1,1,"Pirate"),
-    WIKING(1,1,1,1,"Wiking"),
+    VIKING(1,1,1,1,"Viking"),
     RUINGUARD(1,1,1,1,"Ruin Guard"),
     RUINHUNTER(1,1,1,1,"Ruin Hunter"),
     RUINWATCHTOWER(1,1,1,1,"Ruin Watchtower"),

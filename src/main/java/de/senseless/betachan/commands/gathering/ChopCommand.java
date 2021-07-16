@@ -17,20 +17,27 @@ public class ChopCommand implements ServerCommand {
     @Override
     public void performCommand(String[] args, Member member, TextChannel channel, Message message) {
         User u = User.loadUser(member.getId(), member.getEffectiveName());
-        if(u.getStarted() == 1){
-            if(args.length == 0) {
+        if (u.getStarted() == 1) {
+            if (args.length == 0) {
                 Item tool = u.getEquippedTool();
                 if (tool != null) {
                     if (tool.getToolType() == ToolType.AXE) {
-                        int amount = (int) (Math.round(Math.random() * 5) + 1);
-                        u.addToInventory(ItemHandler.WOOD, amount);
-                        u.save();
-                        EmbedBuilder eb = new EmbedBuilder();
-                        eb.setTimestamp(Instant.now());
-                        eb.setTitle("🪓 Chop 🪓");
-                        eb.setDescription("Chopped " + amount + " Wood!");
-                        eb.setColor(0x006900);
-                        channel.sendMessage(eb.build()).queue();
+                        long cooldown = System.currentTimeMillis() - u.getCooldown("chop");
+                        if (cooldown >= 10*1000) {
+
+                            int amount = (int) (Math.round(Math.random() * 2) + 1);
+                            u.addToInventory(ItemHandler.WOOD, amount);
+                            EmbedBuilder eb = new EmbedBuilder();
+                            eb.setTimestamp(Instant.now());
+                            eb.setTitle("🪓 Chop 🪓");
+                            eb.setDescription("Chopped " + amount + " Wood!");
+                            eb.setColor(0x006900);
+                            channel.sendMessage(eb.build()).queue();
+                            u.setCooldown("chop");
+                            u.save();
+                        } else {
+                            message.reply("Sorry but u need to wait " + (10-(cooldown/1000)) + " sec!").queue();
+                        }
                     } else {
                         message.reply("I'm sorry but without an Axe you can't chop down Trees").queue();
                     }
@@ -38,10 +45,10 @@ public class ChopCommand implements ServerCommand {
                     message.reply("You have no Tool equipped").queue();
                 }
             } else {
-                message.reply("Usage: " + BetaChan.INSTANCE.prop.getProperty("prefix")+ " chop").queue();
+                message.reply("Usage: " + BetaChan.INSTANCE.prop.getProperty("prefix") + " chop").queue();
             }
         } else {
-            message.reply("You need to register yourself with **" + BetaChan.INSTANCE.prop.getProperty("prefix") + " start**!").queue();
+            message.reply("I'm sorry but to use this command you need to start your adventure first with '" + BetaChan.INSTANCE.prop.getProperty("prefix") + " start`").queue();
         }
 
     }

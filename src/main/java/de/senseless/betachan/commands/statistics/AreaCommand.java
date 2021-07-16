@@ -47,8 +47,7 @@ public class AreaCommand implements ServerCommand {
                 }
             }
         } else {
-            String prefix = BetaChan.INSTANCE.prop.getProperty("prefix");
-            message.reply("You need to register yourself with **" + prefix + " start**!").queue();
+            message.reply("I'm sorry but to use this command you need to start your adventure first with '" + BetaChan.INSTANCE.prop.getProperty("prefix") + " start`").queue();
         }
     }
 }

@@ -37,11 +37,9 @@ public class AdminCommand implements ServerCommand {
                     } else if(args[1].equalsIgnoreCase("set")){
                         Member m = message.getGuild().getMemberById(args[2]);
                         if(m != null) {
-                            User u = User.getByID(m.getId());
-                            if (u != null) {
-                                u.setMoney(Integer.parseInt(args[3]));
-                                u.save();
-                            }
+                            User u = User.loadUser(m.getId(),m.getEffectiveName());
+                            u.setMoney(Integer.parseInt(args[3]));
+                            u.save();
                         }
                     }
                 } else if(args[0].equalsIgnoreCase("area")) {

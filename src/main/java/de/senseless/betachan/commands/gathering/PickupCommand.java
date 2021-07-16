@@ -22,15 +22,21 @@ public class PickupCommand implements ServerCommand {
                 Item tool = u.getEquippedTool();
                 if (tool != null) {
                     if (tool.getToolType() == ToolType.BASKET) {
-                        int amount = (int) (Math.round(Math.random() * 5) + 1);
-                        u.addToInventory(ItemHandler.APPLE, amount);
-                        u.save();
-                        EmbedBuilder eb = new EmbedBuilder();
-                        eb.setTimestamp(Instant.now());
-                        eb.setTitle("🍎 Pickup 🍎");
-                        eb.setDescription("Collected " + amount + " Apple!");
-                        eb.setColor(0x006900);
-                        channel.sendMessage(eb.build()).queue();
+                        long cooldown = System.currentTimeMillis() - u.getCooldown("pickup");
+                        if (cooldown >= 10*1000) {
+                            int amount = (int) (Math.round(Math.random() * 5) + 1);
+                            u.addToInventory(ItemHandler.APPLE, amount);
+                            EmbedBuilder eb = new EmbedBuilder();
+                            eb.setTimestamp(Instant.now());
+                            eb.setTitle("🍎 Pickup 🍎");
+                            eb.setDescription("Collected " + amount + " Apple!");
+                            eb.setColor(0x006900);
+                            channel.sendMessage(eb.build()).queue();
+                            u.setCooldown("pickup");
+                            u.save();
+                        } else {
+                            message.reply("I'm sorry but you need to wait " + (10-(cooldown/1000)) + " sec!").queue();
+                        }
                     } else {
                         message.reply("I'm sorry but without an Basket you can't collect Apple").queue();
                     }
@@ -41,7 +47,7 @@ public class PickupCommand implements ServerCommand {
                 message.reply("Usage: " + BetaChan.INSTANCE.prop.getProperty("prefix") + " chop").queue();
             }
         } else {
-            message.reply("You need to register yourself with **" + BetaChan.INSTANCE.prop.getProperty("prefix") + " start**!").queue();
+            message.reply("I'm sorry but to use this command you need to start your adventure first with '" + BetaChan.INSTANCE.prop.getProperty("prefix") + " start`").queue();
         }
     }
 }

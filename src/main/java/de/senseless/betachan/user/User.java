@@ -4,8 +4,10 @@ package de.senseless.betachan.user;
 import de.senseless.betachan.BetaChan;
 import de.senseless.betachan.area.Area;
 import de.senseless.betachan.area.AreaManager;
+import de.senseless.betachan.enums.MonsterType;
 import de.senseless.betachan.handler.ItemHandler;
 import de.senseless.betachan.item.Item;
+import de.senseless.betachan.utils.Dungeon;
 import de.senseless.betachan.utils.Pet;
 
 import java.sql.ResultSet;
@@ -25,6 +27,7 @@ public class User {
     private HashMap<Item, Integer> inventory;
     private LinkedList<Pet> pets;
     private Item equippedTool, equippedSword, equippedArmor;
+    private Dungeon currentDungeon;
     private int started;
 
     public User(String id,String name, int money, int bank, double xp, int level, int atk, int def, int life, int maxlife, Area area, int started,Item equippedTool,Item equippedArmor, Item equippedSword) {
@@ -44,9 +47,10 @@ public class User {
         this.equippedTool = equippedTool;
         this.equippedSword = equippedSword;
         this.equippedArmor = equippedArmor;
-        users.add(this);
+        this.currentDungeon = null;
         inventory = new LinkedHashMap<>();
         pets = new LinkedList<>();
+        users.add(this);
         save();
     }
 
@@ -79,7 +83,8 @@ public class User {
                 Item equippedArmor = Item.getByName(rs.getString("equipped_armor"));
 
                 Area area = Area.getByNumber(rs.getInt("area"));
-                User u = new User(id,name, money, bank, xp, level, atk, def, hp, maxhp, area, started,equippedTool,equippedSword,equippedArmor);
+                rs.close();
+                User u = new User(id,name, money, bank, xp, level, atk, def, hp, maxhp, area, started,equippedTool,equippedArmor,equippedSword);
                 String[] items = inv.split("---");
                 for (String s : items) {
                     if (!s.isEmpty()) {
@@ -95,6 +100,23 @@ public class User {
                         u.addPet(subsplit[0], Integer.parseInt(subsplit[1]));
 
                     }
+                }
+
+                ResultSet rss = BetaChan.INSTANCE.database.onQuery("SELECT * FROM dungeons WHERE user_id=" + id);
+                if(rss != null) {
+                    if (rss.next()) {
+                        MonsterType mt = MonsterType.getByName(rss.getString("monster"));
+                        int dhp = rss.getInt("hp");
+                        int datk = rss.getInt("atk");
+                        int ddef = rss.getInt("def");
+                        double dxp = rss.getDouble("xp");
+                        long dguildID = rss.getLong("guild_id");
+                        long dchannelID = rss.getLong("channel_id");
+                        u.setCurrentDungeon(new Dungeon(mt, dhp, datk, ddef, dxp, dguildID, dchannelID));
+                    }
+                    rss.close();
+                } else {
+                    u.setCurrentDungeon(null);
                 }
 
                 u.save();
@@ -262,6 +284,14 @@ public class User {
         return pets;
     }
 
+    public Dungeon getCurrentDungeon() {
+        return currentDungeon;
+    }
+
+    public void setCurrentDungeon(Dungeon currentDungeon) {
+        this.currentDungeon = currentDungeon;
+    }
+
     public void save() {
         ResultSet rs = BetaChan.INSTANCE.database.onQuery("SELECT id FROM users WHERE id=" + getId());
         try {
@@ -276,6 +306,9 @@ public class User {
                 inv.append("'");
 
                 BetaChan.INSTANCE.database.onUpdate("INSERT INTO users (id,name,hp,maxhp,atk,def,money,level,xp,area,inventory,started) VALUES (" + getId() + ",'"+getName()+"'," + getLife() + "," + getMaxlife() + "," + getAtk() + "," + getDef() + "," + getMoney() + "," + getLevel() + "," + getXp() + "," + getArea().getNumber() + "," + inv + "," + getStarted() + ")");
+                if(getCurrentDungeon() != null) {
+                    BetaChan.INSTANCE.database.onUpdate("INSERT INTO dungeons (user_id,monster,hp,atk,def,xp,guild_id,channel_id) VALUES ("+getId()+",'" + getCurrentDungeon().getMt().getNAME() + "'," + getCurrentDungeon().getHp() + "," + getCurrentDungeon().getAtk() + "," + getCurrentDungeon().getDef() + "," + getCurrentDungeon().getXp() + ","+getCurrentDungeon().getGuildID() + "," + getCurrentDungeon().getChannelID()+")");
+                }
             } else {
                 StringBuilder inv = new StringBuilder("'");
                 for (Item i : getInventory().keySet()) {
@@ -285,6 +318,16 @@ public class User {
                 }
                 inv.append("'");
                 BetaChan.INSTANCE.database.onUpdate("UPDATE users SET hp=" + getLife() + ",name='" + getName() + "',maxhp=" + getMaxlife() + ",atk=" + getAtk() + ",def=" + getDef() + ",money=" + getMoney() + ",bank= " + getBank() + ",level=" + getLevel() + ",xp=" + getXp() + ",area=" + getArea().getNumber() + ",inventory=" + inv + ",started=" + getStarted() + ",equipped_tool=" + (getEquippedTool() != null ? "'" + getEquippedTool().getName() + "'" : "null") + ",equipped_armor=" + (getEquippedArmor() != null ? "'" + getEquippedArmor().getName() + "'" : "null") + ",equipped_sword=" + (getEquippedSword() != null ? "'" +getEquippedSword().getName() + "'" : "null") + " WHERE id=" + getId());
+                if(getCurrentDungeon() != null && getCurrentDungeon().getMt() != null) {
+                    ResultSet rss = BetaChan.INSTANCE.database.onQuery("SELECT user_id FROM dungeons WHERE user_id=" + getId());
+                    if (!rss.next()) {
+                        BetaChan.INSTANCE.database.onUpdate("INSERT INTO dungeons (user_id,monster,hp,atk,def,xp,guild_id,channel_id) VALUES ("+getId()+",'" + getCurrentDungeon().getMt().getNAME() + "'," + getCurrentDungeon().getHp() + "," + getCurrentDungeon().getAtk() + "," + getCurrentDungeon().getDef() + "," + getCurrentDungeon().getXp() + ","+getCurrentDungeon().getGuildID() + "," + getCurrentDungeon().getChannelID()+")");
+                    } else {
+                        BetaChan.INSTANCE.database.onUpdate("UPDATE dungeons SET monster='" + getCurrentDungeon().getMt().getNAME() + "',hp=" + getCurrentDungeon().getHp() + ",atk=" + getCurrentDungeon().getAtk() + ",def=" + getCurrentDungeon().getDef() + ",xp=" + getCurrentDungeon().getXp() + ",guild_id="+getCurrentDungeon().getGuildID()+",channel_id="+getCurrentDungeon().getChannelID()+" WHERE user_id=" + getId());
+                    }
+                } else {
+                    BetaChan.INSTANCE.database.onUpdate("UPDATE dungeons SET monster='" + null + "',hp=" + null + ",atk=" + null + ",def=" + null + ",xp=" + null + ",guild_id="+null+",channel_id="+null+" WHERE user_id=" + getId());
+                }
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -301,6 +344,31 @@ public class User {
         }
         inv.append("'");
         return inv.toString();
+    }
+
+    public void setCooldown(String name){
+        ResultSet rs = BetaChan.INSTANCE.database.onQuery("SELECT user_id FROM cooldowns WHERE user_id=" + getId()+ " AND name='" + name+ "'");
+        try {
+            if (!rs.next()) {
+                BetaChan.INSTANCE.database.onUpdate("INSERT INTO cooldowns (user_id,name,time) VALUES (" + getId() + ",'"+name+"'," + System.currentTimeMillis() + ")");
+            } else {
+                BetaChan.INSTANCE.database.onUpdate("UPDATE cooldowns SET time=" + System.currentTimeMillis() + " WHERE user_id=" + getId()+ " AND name='" + name+ "'");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public long getCooldown(String name){
+        ResultSet rs = BetaChan.INSTANCE.database.onQuery("SELECT time FROM cooldowns WHERE user_id=" + getId() + " AND name='" + name+ "'");
+        try {
+            if (rs.next()) {
+                return rs.getLong("time");
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return 0L;
     }
 
 

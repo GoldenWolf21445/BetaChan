@@ -8,9 +8,20 @@ import java.util.List;
 public class Item {
     private final String name,recipe;
     private final boolean craftable;
-    private int durability, maxDurability;
+    private int durability, maxDurability,atk;
     private ToolType toolType;
     private static List<Item> items = new LinkedList<>();
+
+    public Item(String name,boolean craftable,String recipe,int maxDurability,ToolType toolType,int atk) {
+        this.name = name;
+        this.craftable = craftable;
+        this.recipe = recipe;
+        this.durability = maxDurability;
+        this.maxDurability = maxDurability;
+        this.toolType=toolType;
+        this.atk = atk;
+        items.add(this);
+    }
 
     public Item(String name,boolean craftable,String recipe,int maxDurability,ToolType toolType) {
         this.name = name;
@@ -78,5 +89,9 @@ public class Item {
 
     public int getMaxDurability() {
         return maxDurability;
+    }
+
+    public int getAtk() {
+        return atk;
     }
 }

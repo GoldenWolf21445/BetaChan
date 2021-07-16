@@ -2,6 +2,7 @@ package de.senseless.betachan;
 
 import de.senseless.betachan.area.AreaManager;
 import de.senseless.betachan.handler.CommandManager;
+import de.senseless.betachan.handler.DungeonInteractionHandler;
 import de.senseless.betachan.item.Item;
 import de.senseless.betachan.listener.CommandListener;
 import de.senseless.betachan.sql.SQLite;
@@ -41,6 +42,7 @@ public class BetaChan {
         builder.setStatus(OnlineStatus.ONLINE);
         this.commandManager = new CommandManager();
         builder.addEventListeners(new CommandListener());
+        builder.addEventListeners(new DungeonInteractionHandler());
         AreaManager.init();
         database = new SQLite();
         shardManager = builder.build();

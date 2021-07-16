@@ -1,5 +1,6 @@
 package de.senseless.betachan.commands.statistics;
 
+import de.senseless.betachan.BetaChan;
 import de.senseless.betachan.commands.types.ServerCommand;
 import de.senseless.betachan.user.User;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -86,10 +87,10 @@ public class BankCommand implements ServerCommand {
 
                 }
             } else {
-
+                message.reply("Usage: " + BetaChan.INSTANCE.prop.getProperty("prefix") + " bank {deposit/withdraw} {amount}").queue();
             }
         } else {
-
+            message.reply("I'm sorry but to use this command you need to start your adventure first with '" + BetaChan.INSTANCE.prop.getProperty("prefix") + " start`").queue();
         }
     }
 

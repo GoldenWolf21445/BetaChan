@@ -18,6 +18,9 @@ public class ItemHandler {
     public static final Item IRONINGOT = new Item("Iron Ingot",true);
     public static final Item KITSUNETAIL = new Item("Tail of a Kitsune");
     public static final Item MEAT = new Item("Meat");
+    public static final Item LEATHER = new Item("Leather");
+    public static final Item WOOL = new Item("Wool");
+    public static final Item FEATHER = new Item("Feather ");
     public static final Item COOKEDMEAT = new Item("Cooked Meat",true);
     public static final Item RAWIRON = new Item("Raw Iron");
     public static final Item SPIDERSTRING = new Item("String");
@@ -32,6 +35,7 @@ public class ItemHandler {
     public static final Item WOOD = new Item("Wood");
     public static final Item WOODENAXE = new Item("Wooden Axe", true, "Wood|4", 100, ToolType.AXE);
     public static final Item WOODENPICKAXE = new Item("Wooden Pickaxe", true, "Wood|3---Stick|2", 100, ToolType.PICKAXE);
+    public static final Item WOODSWORD = new Item("Wood Sword", true, "Wood|2---Stick|1", 100, ToolType.SWORD,2);
     public static final Item BASKET = new Item("Basket", false, "", 100, ToolType.BASKET);
     public static final Item STICK = new Item("Stick",true,"Wood|1");
     public static final Item APPLE = new Item("Apple");

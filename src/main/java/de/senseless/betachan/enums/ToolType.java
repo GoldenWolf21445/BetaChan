@@ -4,7 +4,8 @@ public enum ToolType {
 
     AXE(1),
     PICKAXE(2),
-    BASKET(3);
+    BASKET(3),
+    SWORD(4);
 
 
     private int id;

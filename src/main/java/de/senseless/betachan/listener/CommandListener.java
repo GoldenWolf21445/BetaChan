@@ -20,8 +20,7 @@ public class CommandListener extends ListenerAdapter {
             String command = split[0];
 
             if (!BetaChan.INSTANCE.getCommandManager().perform(command, args, event.getMember(), event.getChannel(), event.getMessage())) {
-                event.getChannel().sendMessage("Unbekannter Befehl!").queue();
-                System.out.println("Fehler!");
+                event.getChannel().sendMessage("Unknown command!").queue();
             }
         }
 

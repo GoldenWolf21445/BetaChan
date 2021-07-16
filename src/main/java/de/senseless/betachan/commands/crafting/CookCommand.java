@@ -108,7 +108,7 @@ public class CookCommand implements ServerCommand {
                 message.reply("Usage: **" + BetaChan.INSTANCE.prop.getProperty("prefix") + " cook [coal/wood] [item]**").queue();
             }
         } else {
-            message.reply("You need to register yourself with **" + BetaChan.INSTANCE.prop.getProperty("prefix") + " start**!").queue();
+            message.reply("I'm sorry but to use this command you need to start your adventure first with '" + BetaChan.INSTANCE.prop.getProperty("prefix") + " start`").queue();
         }
     }
 }
